@@ -1,0 +1,6 @@
+# ICSSI Digital Twin - Oldsmar WWTP
+# Install: pip install -r requirements.txt
+
+pymodbus>=3.5.0          # Modbus TCP server & client
+Pillow>=10.0.0           # P&ID equipment image generation (SCADA)
+pyinstaller>=6.0.0       # Build EXE (opsional, hanya untuk packaging)
