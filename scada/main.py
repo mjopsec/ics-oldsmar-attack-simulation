@@ -5,7 +5,7 @@ Oldsmar WWTP SCADA Desktop v3.0
 
 Industrial Control System Security Indonesia
 Tampilan retro-enterprise (Wonderware/Citect/iFIX style) dengan
-menu bar, about dialog, P&ID diagram, digital readout, alarm annunciator.
+menu bar, about dialog, P&ID diagram, digital readout, alarm annunciator
 
 Jalankan: python main.py [--host 127.0.0.1] [--port 502]
 Build    : pyinstaller --onefile --windowed --name ICSSI_SCADA main.py
