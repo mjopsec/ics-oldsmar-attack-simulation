@@ -745,15 +745,23 @@ class TrendChart(tk.Frame):
                  bg=T.BG_DARK, fg=T.TEXT_WHITE, font=T.FONT_SMALL_B,
                  anchor="w").pack(side="left", padx=2, pady=2)
 
-        self._cv = tk.Canvas(self, bg="#EEF0E8", bd=0, highlightthickness=0)
+        self._cv = tk.Canvas(self, bg="#EEF0E8", bd=0, highlightthickness=0, height=130)
         self._cv.pack(fill="both", expand=True, padx=2, pady=2)
         self._cv.bind("<Configure>", self._on_resize)
 
         self._chart_w = 600
+        self._chart_h = 130
+        self.after(50, self._init_draw)
+
+    def _init_draw(self):
+        self._chart_w = max(self._cv.winfo_width(), 400)
+        self._chart_h = max(self._cv.winfo_height(), 130)
         self._draw_frame()
+        self._redraw_lines()
 
     def _on_resize(self, e):
         self._chart_w = e.width
+        self._chart_h = e.height
         self._draw_frame()
         self._redraw_lines()
 
@@ -761,17 +769,19 @@ class TrendChart(tk.Frame):
         return int(self.PAD_L + (idx/(self.HIST-1)) * (self._chart_w - self.PAD_L - self.PAD_R))
 
     def _ph_y(self, val):
-        h = self._cv.winfo_height() or 130
+        h = max(self._chart_h, self.PAD_T + self.PAD_B + 10)
         return int((h - self.PAD_B) - (max(0, min(14, val)) / 14.0) * (h - self.PAD_T - self.PAD_B))
 
     def _naoh_y(self, val):
-        h = self._cv.winfo_height() or 130
+        h = max(self._chart_h, self.PAD_T + self.PAD_B + 10)
         return int((h - self.PAD_B) - (max(0, min(600, val)) / 600.0) * (h - self.PAD_T - self.PAD_B))
 
     def _draw_frame(self):
         c = self._cv
         c.delete("frame")
-        h = c.winfo_height() or 130
+        c.delete("ph_line")
+        c.delete("naoh_line")
+        h = max(self._chart_h, self.PAD_T + self.PAD_B + 10)
         w = self._chart_w
         CL, CR, CT, CB = self.PAD_L, w - self.PAD_R, self.PAD_T, h - self.PAD_B
 
